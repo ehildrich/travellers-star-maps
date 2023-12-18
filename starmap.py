@@ -1,25 +1,17 @@
 import tkinter as tk
 from PIL import Image, ImageDraw, ImageFont
+from matplotlib import font_manager
+
+from star import Star
+from reader import getStarInfo
+
+
 
 # Global Variables
 IMAGE_SIZE = 800
 EDGE_SIZE = 20
 STAR_SIZE = 8
-
-
-
-# Class Definitions
-class Star: 
-    def __init__(self, x: float, y: float, z: float, name: str, color: str, diameter: float):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.name = name
-        self.color = color
-        self.diameter = diameter
-    
-    def __str__(self) -> str:
-        return f"({self.name}, {self.x}, {self.y}, {self.z}, [{self.color}, {self.diameter}])"
+FONT_SIZE = 12
 
 
 
@@ -58,7 +50,7 @@ def drawEdgeRule(draw):
     draw.line([(IMAGE_SIZE + EDGE_SIZE, EDGE_SIZE + (IMAGE_SIZE*0.75)), (IMAGE_SIZE + EDGE_SIZE + EDGE_SIZE/2, EDGE_SIZE + (IMAGE_SIZE*0.75))], (255,255,255), 2)
 
 # Draws a given star on the board according to the star's coordinates
-def drawStar(draw, star: Star) -> None:
+def drawStar(draw, font, star: Star) -> None:
     # Calculate x and y pixel position on the board using the star's given x and y fields
     xPos = (star.x * 4) + (IMAGE_SIZE/2 + EDGE_SIZE)
     yPos = (star.y * 4) + (IMAGE_SIZE/2 + EDGE_SIZE)
@@ -66,26 +58,30 @@ def drawStar(draw, star: Star) -> None:
     # Draw circle on board 
     draw.ellipse([(xPos - STAR_SIZE/2, yPos - STAR_SIZE/2),(xPos + STAR_SIZE/2, yPos + STAR_SIZE/2)], (255,255,255), (255,255,255), 0)
 
-# Converts a string into a star object
-def stringToStar(string: str) -> Star: 
-    items = string.split(", ")
-    starName = items[0]
-    starX = float(items[1])
-    starY = float(items[2])
-    starZ = float(items[3])
-    starColor = items[4]
-    starDiameter = float(items[5])
-    return Star(starX, starY, starZ, starName, starColor, starDiameter)
+    # Add z-axis below
+    draw.text((xPos - STAR_SIZE*2, yPos + STAR_SIZE*1.5), str(star.z), (255,255,255), font)
+
+# Grabs a basic sans-serif font of the given size
+def getFont(size: int) -> ImageFont.FreeTypeFont:
+    sansSerif = font_manager.FontProperties(family = "sans-serif", style="normal")
+    filePath = font_manager.findfont(sansSerif)
+
+    font = ImageFont.truetype(filePath, size)
+    return font
 
 
-
-
-# Create map and draw edge rules
+# Create map, draw object, and get the text font
 map = Image.new("RGB", (IMAGE_SIZE + EDGE_SIZE*2, IMAGE_SIZE + EDGE_SIZE*2), (0,0,0))
 mapDraw = ImageDraw.Draw(map)
+typeFont = getFont(FONT_SIZE)
+
+# Draw map edges
 drawEdgeRule(mapDraw)
 
-exampleStar = stringToStar("Puivert, -22, 8, -33, yellow, 10")
-drawStar(mapDraw, exampleStar)
+# Get starmap information
+starmapInfo = getStarInfo()
+# Draw stars
+for star in starmapInfo.stars:
+    drawStar(mapDraw, typeFont, star)
 
 map.show()
