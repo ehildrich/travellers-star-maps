@@ -1,4 +1,3 @@
-import tkinter as tk
 from PIL import Image, ImageDraw, ImageFont
 from matplotlib import font_manager
 
@@ -62,12 +61,14 @@ def drawStar(draw, font, star: Star) -> None:
     draw.text((xPos - STAR_SIZE*2, yPos + STAR_SIZE*1.5), str(star.z), (255,255,255), font)
 
 # Grabs a basic sans-serif font of the given size
+# TODO throw error if no font found
 def getFont(size: int) -> ImageFont.FreeTypeFont:
     sansSerif = font_manager.FontProperties(family = "sans-serif", style="normal")
     filePath = font_manager.findfont(sansSerif)
 
     font = ImageFont.truetype(filePath, size)
     return font
+
 
 
 # Create map, draw object, and get the text font

@@ -1,3 +1,5 @@
+
+# Class Definitions
 class Star: 
     def __init__(self, x: float, y: float, z: float, name: str, color: str, diameter: float):
         self.x = x

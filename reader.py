@@ -23,6 +23,7 @@ def stringToLine(string: str) -> StarLine:
     return StarLine(firstStar, secondStar, lineColor, lineDiameter)
 
 # Opens a text file and returns a list of the file's text lines, stripped of whitespace
+# TODO throw error if file not found
 def getFileStrings():
     # Open map text file
     with open("map.txt", "r") as stars:
@@ -39,7 +40,9 @@ def getFileStrings():
                 items.append(strippedLine)
     return items
 
-# TODO split lines into stars and lines and return star info object
+# Given a list of strings from a properly formatted starmap text file, returns
+# a StarInfo object containing a list of stars and a list of lines
+# TODO throw error if section headers do not exist
 def getStarInfo():
     items = getFileStrings()
     
