@@ -4,6 +4,7 @@ A simple Python application to generate visual starmaps for use in the TTRPG Tra
 ## Python Libraries
 This project utilizes the following Python libraries: 
 * Pillow
+* math
 * mathplotlib
 
 ## Text File Format
