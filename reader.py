@@ -30,9 +30,9 @@ def stringToLine(string: str) -> StarLine:
 
 # Opens a text file and returns a list of the file's text lines, stripped of whitespace
 # TODO throw error if file not found
-def getFileStrings():
+def getFileStrings(filename: str) -> list:
     # Open map text file
-    with open("map.txt", "r") as stars:
+    with open(filename, "r") as stars:
         # Read all lines and strip whitespace from each
         lines = stars.readlines()
         items = []
@@ -49,8 +49,8 @@ def getFileStrings():
 # Given a list of strings from a properly formatted starmap text file, returns
 # a StarInfo object containing a list of stars and a list of lines
 # TODO throw error if section headers do not exist
-def getStarInfo():
-    items = getFileStrings()
+def getStarInfo(filename: str) -> StarInfo:
+    items = getFileStrings(filename)
     
     # Get the separator between the stars and lines in the text lines
     connectIndex = items.index("CONNECT")

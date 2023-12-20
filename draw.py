@@ -8,7 +8,7 @@ sp = StarParameters()
 # Function Definitions
 
 # Draws the gridlines at the edges of the board and the centerlines that pass through the middle of board
-def drawEdgeRule(draw): 
+def drawEdgeRule(draw: ImageDraw) -> None: 
     # Start with center lines
     draw.line([(0, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], sp.COLORS["gray"], 1)
     draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), 0), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], sp.COLORS["gray"], 1)
@@ -51,7 +51,7 @@ def getPos(star: Star, type: str) -> float:
         return -1
 
 # Given a string of text, returns how many pixels wide that text is when drawn on the board
-def getTextWidth(font, string: str) -> int:
+def getTextWidth(font: ImageFont.FreeTypeFont, string: str) -> int:
     testImage = Image.new("RGB", (75,75))
     testDraw = ImageDraw.Draw(testImage)
 
@@ -61,7 +61,7 @@ def getTextWidth(font, string: str) -> int:
     return bound[2] - bound[0]
 
 # Draws a given star on the board according to the star's coordinates
-def drawStar(draw, font, star: Star) -> None:
+def drawStar(draw: ImageDraw, font: ImageFont.FreeTypeFont, star: Star) -> None:
     # Calculate x and y pixel position on the board using the star's given x and y fields
     xPos = getPos(star, "x")
     yPos = getPos(star, "y")
@@ -85,7 +85,7 @@ def drawStar(draw, font, star: Star) -> None:
         draw.text((xPos + sp.CIRCLE_SIZE, yPos), str(star.z), sp.COLORS["white"], font)
 
 # Draws a line between two stars on the board
-def drawLine(draw, line: StarLine, info: StarInfo) -> None: 
+def drawLine(draw: ImageDraw, line: StarLine, info: StarInfo) -> None: 
     # Get both stars
     firstStar = None
     secondStar = None
@@ -95,6 +95,7 @@ def drawLine(draw, line: StarLine, info: StarInfo) -> None:
         if (star.name == line.secondStar): 
             secondStar = star
     
+    # TODO handle if stars are not found - issue a warning?
     if (firstStar != None) and (secondStar != None): 
         # Get the positions of the stars on the board
         firstStarX = getPos(firstStar, "x")
@@ -123,7 +124,7 @@ def getFont(size: int) -> ImageFont.FreeTypeFont:
     font = ImageFont.truetype(filePath, size)
     return font
 
-def drawBoard(draw, starmapInfo: StarInfo) -> None: 
+def drawBoard(draw: ImageDraw, starmapInfo: StarInfo) -> None: 
     # First draw map edges
     drawEdgeRule(draw)
 
@@ -137,7 +138,7 @@ def drawBoard(draw, starmapInfo: StarInfo) -> None:
     for star in starmapInfo.stars:
         drawStar(draw, typeFont, star)
 
-def createBoard(info: StarInfo):
+def createBoard(info: StarInfo) -> Image:
     # Create map, draw object, and get the text font
     map = Image.new("RGB", (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.IMAGE_SIZE + sp.EDGE_SIZE*2), (0,0,0))
     mapDraw = ImageDraw.Draw(map)
