@@ -1,4 +1,5 @@
-from star import Star, StarLine, StarInfo
+from star import *
+sp = StarParameters()
 
 # Function Definitions
 
@@ -10,6 +11,11 @@ def stringToStar(string: str) -> Star:
     starY = float(values[2])
     starZ = float(values[3])
     starColor = values[4]
+
+    # if the color isn't valid, default to white
+    if (starColor not in sp.COLORS): 
+        starColor = "white"
+
     starDiameter = float(values[5])
     return Star(starX, starY, starZ, starName, starColor, starDiameter)
 
