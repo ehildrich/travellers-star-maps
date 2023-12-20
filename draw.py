@@ -42,13 +42,23 @@ def drawEdgeRule(draw):
 # Returns either the x, y, or z position of a star on the board
 def getPos(star: Star, type: str) -> float: 
     if (type.lower() == "x"):
-        return (star.x * sp.RESOLUTION) + (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE)
+        return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) + (star.x * sp.RESOLUTION)
     if (type.lower() == "y"):
-        return (star.y * sp.RESOLUTION) + (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE)
+        return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) - (star.y * sp.RESOLUTION)
     if (type.lower() == "z"):
-        return (star.z * sp.RESOLUTION) + (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE)
+        return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) + (star.z * sp.RESOLUTION)
     else: 
         return -1
+
+# Given a string of text, returns how many pixels wide that text is when drawn on the board
+def getTextWidth(font, string: str) -> int:
+    testImage = Image.new("RGB", (75,75))
+    testDraw = ImageDraw.Draw(testImage)
+
+    testDraw.text((0,0), string, sp.COLORS["white"], font)
+    bound = testImage.getbbox()
+
+    return bound[2] - bound[0]
 
 # Draws a given star on the board according to the star's coordinates
 def drawStar(draw, font, star: Star) -> None:
@@ -64,8 +74,15 @@ def drawStar(draw, font, star: Star) -> None:
     # Draw outside circle
     draw.ellipse([(xPos - sp.CIRCLE_SIZE/2, yPos - sp.CIRCLE_SIZE/2),(xPos + sp.CIRCLE_SIZE/2, yPos + sp.CIRCLE_SIZE/2)], outline=sp.COLORS[star.color], width=sp.LINE_WIDTH)
 
-    # Add z-axis below
-    draw.text((xPos - starSize*2, yPos + starSize*1.5), str(star.z), sp.COLORS["white"], font)
+    # Add name and Z-axis below. Text is placed so that it appears just to the right of the star's circle. 
+    # Check if any of the text will go past the rightmost edge rule. If so move it to the right of the star
+    if (xPos + sp.CIRCLE_SIZE + max(getTextWidth(font, star.name), getTextWidth(font, str(star.z))) > sp.IMAGE_SIZE + sp.EDGE_SIZE):
+        draw.text((xPos - sp.CIRCLE_SIZE - getTextWidth(font, star.name), yPos - sp.FONT_SIZE), star.name, sp.COLORS["white"], font)
+        draw.text((xPos - sp.CIRCLE_SIZE - getTextWidth(font, str(star.z)), yPos), str(star.z), sp.COLORS["white"], font)
+    else:
+        # Otherwise draw the text to the right of the star
+        draw.text((xPos + sp.CIRCLE_SIZE, yPos - sp.FONT_SIZE), str(star.name), sp.COLORS["white"], font)
+        draw.text((xPos + sp.CIRCLE_SIZE, yPos), str(star.z), sp.COLORS["white"], font)
 
 # Draws a line between two stars on the board
 def drawLine(draw, line: StarLine, info: StarInfo) -> None: 
@@ -100,7 +117,7 @@ def drawLine(draw, line: StarLine, info: StarInfo) -> None:
 # Grabs a basic sans-serif font of the given size
 # TODO throw error if no font found
 def getFont(size: int) -> ImageFont.FreeTypeFont:
-    sansSerif = font_manager.FontProperties(family = "sans-serif", style="normal")
+    sansSerif = font_manager.FontProperties(family = "monospace", style="normal")
     filePath = font_manager.findfont(sansSerif)
 
     font = ImageFont.truetype(filePath, size)

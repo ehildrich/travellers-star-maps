@@ -1,7 +1,3 @@
-from PIL import Image, ImageDraw, ImageFont
-from matplotlib import font_manager
-import math
-
 from reader import getStarInfo
 from draw import createBoard
 
