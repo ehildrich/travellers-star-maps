@@ -1,18 +1,7 @@
 
-# Class Definitions
+# Global Variables
 
-# Defines the parameters of the board
-class StarParameters:
-    def __init__(self): 
-        self.IMAGE_SIZE = 800
-        self.RESOLUTION = self.IMAGE_SIZE/200
-        self.EDGE_SIZE = 20
-        self.LINE_WIDTH = 1
-        self.LINE_OFFSET = 10
-        self.MAX_STAR_SIZE = 12
-        self.CIRCLE_SIZE = 24
-        self.FONT_SIZE = 12
-        self.COLORS = {
+COLORS = {
             "blue" : (51, 148, 255), 
             "brown" : (123, 68, 0), 
             "gray" : (50, 50, 50), 
@@ -22,7 +11,22 @@ class StarParameters:
             "red" : (214, 16, 16), 
             "white" : (255,255,255), 
             "yellow" : (249, 218, 2) 
-        }
+}
+
+
+# Class Definitions
+
+# Defines the parameters of the board
+class StarParameters:
+    def __init__(self, imgSize, edgeSize, lineWidth, offset, starSize, circleSize, fontSize): 
+        self.IMAGE_SIZE = imgSize
+        self.RESOLUTION = self.IMAGE_SIZE/200
+        self.EDGE_SIZE = edgeSize
+        self.LINE_WIDTH = lineWidth
+        self.LINE_OFFSET = offset
+        self.MAX_STAR_SIZE = starSize
+        self.CIRCLE_SIZE = circleSize
+        self.FONT_SIZE = fontSize
         
         # The size of the circle is limited to the offset of the connecting 
         # lines to prevent the lines from overlapping the circles
@@ -61,7 +65,8 @@ class StarLine:
 # Defines all of the information about a board, including 
 # all of its stars and the lines between them
 class StarInfo:
-    def __init__(self, stars: set, lines: set): 
+    def __init__(self, stars: set, lines: set, params: StarParameters): 
         self.stars = stars
         self.lines = lines
+        self.params = params
     

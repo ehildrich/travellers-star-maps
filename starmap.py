@@ -3,7 +3,8 @@ from draw import createBoard
 
 
 # Get user input of what text file to read
-mapFile = input("Enter the name of the text file to read: ")
+#mapFile = input("Enter the name of the text file to read: ")
+mapFile = "map.txt"
 
 # Get starmap information
 starmapInfo = getStarInfo(mapFile)

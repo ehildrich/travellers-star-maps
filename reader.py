@@ -1,9 +1,9 @@
 from star import *
-sp = StarParameters()
 
 # Function Definitions
 
 # Converts a string into a star object
+# TODO throw error if length of values is not 5
 def stringToStar(string: str) -> Star: 
     values = string.split(", ")
     starName = values[0]
@@ -13,13 +13,14 @@ def stringToStar(string: str) -> Star:
     starColor = values[4]
 
     # if the color isn't valid, default to white
-    if (starColor not in sp.COLORS): 
+    if (starColor not in COLORS): 
         starColor = "white"
 
     starDiameter = float(values[5])
     return Star(starX, starY, starZ, starName, starColor, starDiameter)
 
 # Converts a string into a star line object
+# TODO throw error if length of values is not 4
 def stringToLine(string: str) -> StarLine: 
     values = string.split(", ")
     firstStar = values[0]
@@ -53,10 +54,18 @@ def getStarInfo(filename: str) -> StarInfo:
     items = getFileStrings(filename)
     
     # Get the separator between the stars and lines in the text lines
+    starIndex = items.index("STAR")
     connectIndex = items.index("CONNECT")
 
+    # Take only the parameters and convert into a dictionary
+    paramStrings = items[1:starIndex]
+    params = {}
+    for paramString in paramStrings:
+        param = paramString.split(": ")
+        params[param[0]] = int(param[1])
+
     # Take only the star items and convert into a list of star objects
-    starStrings = items[1:connectIndex]
+    starStrings = items[(starIndex + 1):connectIndex]
     stars = []
     for starString in starStrings:
         stars.append(stringToStar(starString))
@@ -67,5 +76,11 @@ def getStarInfo(filename: str) -> StarInfo:
     for lineString in lineStrings:
         lines.append(stringToLine(lineString))
 
-    # Return a StarInfo containing both lists
-    return StarInfo(stars, lines)
+    # Return a StarInfo containing both lists and a paramter object made out of the dictionary
+    return StarInfo(stars, lines, StarParameters(params['Image Size'], 
+                                                 params['Edge Size'], 
+                                                 params['Line Width'], 
+                                                 params['Line Offset'], 
+                                                 params['Star Size'], 
+                                                 params['Circle Size'], 
+                                                 params['Font Size']))
