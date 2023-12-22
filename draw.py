@@ -96,7 +96,6 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
         if (star.name == line.secondStar): 
             secondStar = star
     
-    # TODO handle if stars are not found - issue a warning?
     if (firstStar != None) and (secondStar != None): 
         # Get the positions of the stars on the board
         firstStarX = getPos(sp, firstStar, "x")
@@ -115,9 +114,10 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
 
         # Draw the line with the offset coordinates
         draw.line([firstOffset, secondOffset], COLORS[line.color], sp.LINE_WIDTH)
+    else: 
+        raise AttributeError("One or more stars " + line.firstStar + " and " + line.secondStar + " specified in a line was not found.")
 
 # Grabs a basic sans-serif font of the given size
-# TODO throw error if no font found
 def getFont(size: int) -> ImageFont.FreeTypeFont:
     sansSerif = font_manager.FontProperties(family = "monospace", style="normal")
     filePath = font_manager.findfont(sansSerif)

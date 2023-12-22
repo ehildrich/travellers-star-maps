@@ -3,19 +3,21 @@ from draw import createBoard, saveImage
 
 
 
-
 # Get user input of what text file to read
 mapFile = input("Enter the name of the text file to read: ")
-#mapFile = "map.txt"
 
-# Get starmap information
-starmapInfo = getStarInfo(mapFile)
+try: 
+    # Get starmap information
+    starmapInfo = getStarInfo(mapFile)
 
-# Draw board items
-map = createBoard(starmapInfo)
+    # Draw board items
+    map = createBoard(starmapInfo)
+except Exception as e:
+    # Show any errors
+    print(e)
+else: 
+    # Show the map
+    map.show()
 
-# Show the map
-map.show()
-
-# Save the map
-saveImage(map)
+    # Save the map
+    saveImage(map)

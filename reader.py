@@ -8,7 +8,7 @@ def stringToStar(string: str) -> Star:
 
     # Each star needs to have 6 values
     if not (len(values) == 6):
-        raise ValueError("Stars must have 6 values each.")
+        raise ValueError("One of the stars does not have the correct number of values, 6.")
 
     starName = values[0]
     starX = float(values[1])
@@ -29,7 +29,7 @@ def stringToLine(string: str) -> StarLine:
 
     # Each line needs to have 4 values
     if not (len(values) == 4):
-        raise ValueError("Lines must have 4 values each.")
+        raise ValueError("One of the lines does not have the correct number of values, 4.")
     
     firstStar = values[0]
     secondStar = values[1]
@@ -77,6 +77,9 @@ def getStarInfo(filename: str) -> StarInfo:
 
     # Take only the parameters and convert into a dictionary
     paramStrings = items[1:starIndex]
+    if not (len(paramStrings) == 7):
+        raise ValueError("The number of parameters given is incorrect. There must be 7 parameters: Image Size, Edge Size, Line Width, Line Offset, Star Size, Circle Size, and Font Size.")
+
     params = {}
     for paramString in paramStrings:
         param = paramString.split(": ")
@@ -86,21 +89,13 @@ def getStarInfo(filename: str) -> StarInfo:
     starStrings = items[(starIndex + 1):connectIndex]
     stars = []
     for starString in starStrings:
-        # If there was an error, raise it to the next level
-        try: 
-            stars.append(stringToStar(starString))
-        except:
-            raise
+        stars.append(stringToStar(starString))
 
     # Take only the line items and convert into a list of line objects
     lineStrings = items[(connectIndex + 1):]
     lines = []
     for lineString in lineStrings:
-        # If there was an error, raise it to the next level
-        try:
-            lines.append(stringToLine(lineString))
-        except:
-            raise
+        lines.append(stringToLine(lineString))
 
     # Return a StarInfo containing both lists and a paramter object made out of the dictionary
     return StarInfo(stars, lines, StarParameters(params['Image Size'], 
