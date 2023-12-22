@@ -1,10 +1,12 @@
 from reader import getStarInfo
-from draw import createBoard
+from draw import createBoard, saveImage
+
+
 
 
 # Get user input of what text file to read
-#mapFile = input("Enter the name of the text file to read: ")
-mapFile = "map.txt"
+mapFile = input("Enter the name of the text file to read: ")
+#mapFile = "map.txt"
 
 # Get starmap information
 starmapInfo = getStarInfo(mapFile)
@@ -14,3 +16,6 @@ map = createBoard(starmapInfo)
 
 # Show the map
 map.show()
+
+# Save the map
+saveImage(map)

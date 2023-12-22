@@ -3,9 +3,13 @@ from star import *
 # Function Definitions
 
 # Converts a string into a star object
-# TODO throw error if length of values is not 5
 def stringToStar(string: str) -> Star: 
     values = string.split(", ")
+
+    # Each star needs to have 6 values
+    if not (len(values) == 6):
+        raise ValueError("Stars must have 6 values each.")
+
     starName = values[0]
     starX = float(values[1])
     starY = float(values[2])
@@ -20,9 +24,13 @@ def stringToStar(string: str) -> Star:
     return Star(starX, starY, starZ, starName, starColor, starDiameter)
 
 # Converts a string into a star line object
-# TODO throw error if length of values is not 4
 def stringToLine(string: str) -> StarLine: 
     values = string.split(", ")
+
+    # Each line needs to have 4 values
+    if not (len(values) == 4):
+        raise ValueError("Lines must have 4 values each.")
+    
     firstStar = values[0]
     secondStar = values[1]
     lineColor = values[2]
@@ -30,32 +38,42 @@ def stringToLine(string: str) -> StarLine:
     return StarLine(firstStar, secondStar, lineColor, lineDiameter)
 
 # Opens a text file and returns a list of the file's text lines, stripped of whitespace
-# TODO throw error if file not found
 def getFileStrings(filename: str) -> list:
     # Open map text file
-    with open(filename, "r") as stars:
-        # Read all lines and strip whitespace from each
-        lines = stars.readlines()
-        items = []
-        for line in lines:
-            strippedLine = line.rstrip().lstrip()
+    try:
+        textFile = open(filename, "r")
+    except: 
+        raise FileNotFoundError("The text file does not exist.")
+    else: 
+        with textFile as stars:
+            # Read all lines and strip whitespace from each
+            lines = stars.readlines()
+            items = []
+            for line in lines:
+                strippedLine = line.rstrip().lstrip()
 
-            # Ignore blank lines
-            if(strippedLine == ""): 
-                continue
-            else: 
-                items.append(strippedLine)
-    return items
+                # Ignore blank lines
+                if(strippedLine == ""): 
+                    continue
+                else: 
+                    items.append(strippedLine)
+        return items
 
 # Given a list of strings from a properly formatted starmap text file, returns
 # a StarInfo object containing a list of stars and a list of lines
-# TODO throw error if section headers do not exist
 def getStarInfo(filename: str) -> StarInfo:
     items = getFileStrings(filename)
     
     # Get the separator between the stars and lines in the text lines
-    starIndex = items.index("STAR")
-    connectIndex = items.index("CONNECT")
+    # If a separator is missing, raise an error. 
+    try: 
+        starIndex = items.index("STAR")
+        connectIndex = items.index("CONNECT")
+
+        # This index is not used, this is purely to ensure proper formatting of the text file
+        paramIndex = items.index("PARAMETER")
+    except:
+        raise ValueError("A section header is missing.")
 
     # Take only the parameters and convert into a dictionary
     paramStrings = items[1:starIndex]
@@ -68,13 +86,21 @@ def getStarInfo(filename: str) -> StarInfo:
     starStrings = items[(starIndex + 1):connectIndex]
     stars = []
     for starString in starStrings:
-        stars.append(stringToStar(starString))
+        # If there was an error, raise it to the next level
+        try: 
+            stars.append(stringToStar(starString))
+        except:
+            raise
 
     # Take only the line items and convert into a list of line objects
     lineStrings = items[(connectIndex + 1):]
     lines = []
     for lineString in lineStrings:
-        lines.append(stringToLine(lineString))
+        # If there was an error, raise it to the next level
+        try:
+            lines.append(stringToLine(lineString))
+        except:
+            raise
 
     # Return a StarInfo containing both lists and a paramter object made out of the dictionary
     return StarInfo(stars, lines, StarParameters(params['Image Size'], 

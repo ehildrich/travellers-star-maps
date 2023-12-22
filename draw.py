@@ -1,5 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from matplotlib import font_manager
+from datetime import datetime
+import os
 import math
 
 from star import *
@@ -123,6 +125,7 @@ def getFont(size: int) -> ImageFont.FreeTypeFont:
     font = ImageFont.truetype(filePath, size)
     return font
 
+# Draws all elements of the board
 def drawBoard(draw: ImageDraw, starmapInfo: StarInfo) -> None: 
     # First draw map edges
     drawEdgeRule(starmapInfo.params, draw)
@@ -137,6 +140,7 @@ def drawBoard(draw: ImageDraw, starmapInfo: StarInfo) -> None:
     for star in starmapInfo.stars:
         drawStar(starmapInfo.params, draw, typeFont, star)
 
+# Creates the board image and then draws board elements onto it. Returns the completed image
 def createBoard(info: StarInfo) -> Image:
     # Create map, draw object, and get the text font
     map = Image.new("RGB", (info.params.IMAGE_SIZE + info.params.EDGE_SIZE*2, info.params.IMAGE_SIZE + info.params.EDGE_SIZE*2), (0,0,0))
@@ -145,3 +149,16 @@ def createBoard(info: StarInfo) -> Image:
     drawBoard(mapDraw, info)
 
     return map
+
+# Saves a given image to the output directory as a PNG
+def saveImage(image: Image) -> None:
+    # If an output directory doesn't already exist, create it
+    OUTPUT = "./output/"
+    if not (os.path.exists(OUTPUT)):
+        os.mkdir(OUTPUT)
+
+    # The filename is the current time up to the microsecond
+    dateString = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
+
+    # Save the image in the output directory
+    image.save(OUTPUT + dateString + ".png")

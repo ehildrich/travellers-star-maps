@@ -9,6 +9,8 @@ This project utilizes the following Python libraries:
 * Pillow
 * math
 * mathplotlib
+* os
+* datetime
 
 
 
