@@ -61,6 +61,10 @@ def getTextWidth(font: ImageFont.FreeTypeFont, string: str) -> int:
     
     return bound[2] - bound[0]
 
+def getDistanceRatio(star: Star, sp: StarParameters, distance: float): 
+    # Calculate offset based on the star's circle diameter
+    return ((star.diameter*sp.RESOLUTION)/2) / distance
+
 # Draws a given star on the board according to the star's coordinates
 def drawStar(sp: StarParameters, draw: ImageDraw, font: ImageFont.FreeTypeFont, star: Star) -> None:
     # Calculate x and y pixel position on the board using the star's given x and y fields
@@ -73,11 +77,11 @@ def drawStar(sp: StarParameters, draw: ImageDraw, font: ImageFont.FreeTypeFont, 
     draw.ellipse([(xPos - starSize/2, yPos - starSize/2),(xPos + starSize/2, yPos + starSize/2)], fill=COLORS["white"])
 
     # Draw outside circle
-    if (star.diameter*4 < sp.CIRCLE_SIZE): 
+    if (star.diameter*sp.RESOLUTION < sp.CIRCLE_SIZE): 
         circleSize = sp.CIRCLE_SIZE
         print("Warning: Diameter of star " + star.name + " was less than the specified Circle Size parameter.")
     else:
-        circleSize = star.diameter*4
+        circleSize = star.diameter*sp.RESOLUTION
     
     draw.ellipse([(xPos - circleSize/2, yPos - circleSize/2),(xPos + circleSize/2, yPos + circleSize/2)], outline=COLORS[star.color], width=sp.LINE_WIDTH)
 
@@ -112,17 +116,12 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
         # Get the distance between the two stars
         distance = math.sqrt((secondStarX - firstStarX)**2 + (secondStarY - firstStarY)**2)
 
-        # If the line offset is less than the star's circle size, make it larger to compensate
-        if (star.diameter*4 > sp.CIRCLE_SIZE): 
-            offset = (star.diameter*4)/2
-        else:
-            offset = sp.LINE_OFFSET
+        firstDistanceRatio = getDistanceRatio(firstStar, sp, distance)
+        secondDistanceRatio = getDistanceRatio(secondStar, sp, distance)
         
-        # Get the ratio between the distance and the offset
-        distanceRatio = offset / distance
-        # Use the ratio to calculate the points on the line that are a offset's length away from the stars
-        firstOffset = ((1 - distanceRatio) * firstStarX + distanceRatio * secondStarX, (1 - distanceRatio) * firstStarY + distanceRatio * secondStarY) 
-        secondOffset = ((1 - distanceRatio) * secondStarX + distanceRatio * firstStarX, (1 - distanceRatio) * secondStarY + distanceRatio * firstStarY) 
+        # Use the ratio to calculate the points on the line that are an offset's length away from the stars
+        firstOffset = ((1 - firstDistanceRatio) * firstStarX + firstDistanceRatio * secondStarX, (1 - firstDistanceRatio) * firstStarY + firstDistanceRatio * secondStarY) 
+        secondOffset = ((1 - secondDistanceRatio) * secondStarX + secondDistanceRatio * firstStarX, (1 - secondDistanceRatio) * secondStarY + secondDistanceRatio * firstStarY) 
 
         # Draw the line with the offset coordinates
         draw.line([firstOffset, secondOffset], COLORS[line.color], sp.LINE_WIDTH)

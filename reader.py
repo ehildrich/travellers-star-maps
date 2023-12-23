@@ -3,7 +3,7 @@ from star import *
 # Function Definitions
 
 # Converts a string into a star object
-def stringToStar(string: str) -> Star: 
+def stringToStar(string: str, sp: StarParameters) -> Star: 
     values = string.split(", ")
 
     # Each star needs to have 6 values
@@ -19,13 +19,16 @@ def stringToStar(string: str) -> Star:
     except: 
         raise ValueError("One of the x, y, and z values of star " + starName + " is not a valid number.")
 
-    starColor = values[4]
+    starColor = values[4].lower()
     # if the color isn't valid, default to white
     if (starColor not in COLORS): 
         starColor = "white"
 
     try: 
         starDiameter = float(values[5])
+        # If the star's diameter is less than the given circle size, normalize it to the minimum circle size.
+        if (starDiameter*sp.RESOLUTION < sp.CIRCLE_SIZE):
+            starDiameter = sp.CIRCLE_SIZE/sp.RESOLUTION
     except: 
         raise ValueError("The circle diameter of star " + starName + " is not a valid number.")
     
@@ -95,7 +98,7 @@ def getStarInfo(filename: str) -> StarInfo:
     # Take only the parameters and convert into a dictionary
     paramStrings = items[1:starIndex]
     if not (len(paramStrings) == 7):
-        raise ValueError("The number of parameters given is incorrect. There must be 7 parameters: Image Size, Edge Size, Line Width, Line Offset, Star Size, Circle Size, and Font Size.")
+        raise ValueError("The number of parameters given is incorrect. There must be 6 parameters: Image Size, Edge Size, Line Width, Star Size, Circle Size, and Font Size.")
 
     params = {}
     try: 
@@ -104,13 +107,18 @@ def getStarInfo(filename: str) -> StarInfo:
             params[param[0]] = float(param[1])
     except:
         raise ValueError("There was an error with the format of one of the parameters. All of the values must be numbers.")
-
+    starParameters =StarParameters(params['Image Size'], 
+                                    params['Edge Size'], 
+                                    params['Line Width'], 
+                                    params['Star Size'], 
+                                    params['Circle Size'], 
+                                    params['Font Size'])
 
     # Take only the star items and convert into a list of star objects
     starStrings = items[(starIndex + 1):connectIndex]
     stars = []
     for starString in starStrings:
-        stars.append(stringToStar(starString))
+        stars.append(stringToStar(starString, starParameters))
 
     # Take only the line items and convert into a list of line objects
     lineStrings = items[(connectIndex + 1):]
@@ -119,10 +127,4 @@ def getStarInfo(filename: str) -> StarInfo:
         lines.append(stringToLine(lineString))
 
     # Return a StarInfo containing both lists and a paramter object made out of the dictionary
-    return StarInfo(stars, lines, StarParameters(params['Image Size'], 
-                                                 params['Edge Size'], 
-                                                 params['Line Width'], 
-                                                 params['Line Offset'], 
-                                                 params['Star Size'], 
-                                                 params['Circle Size'], 
-                                                 params['Font Size']))
+    return StarInfo(stars, lines, starParameters)
