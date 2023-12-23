@@ -102,7 +102,7 @@ def getStarInfo(filename: str, orientation: tuple) -> StarInfo:
 
     # Take only the parameters and convert into a dictionary
     paramStrings = items[1:starIndex]
-    if not (len(paramStrings) == 7):
+    if not (len(paramStrings) == 6):
         raise ValueError("The number of parameters given is incorrect. There must be 6 parameters: Image Size, Edge Size, Line Width, Star Size, Circle Size, and Font Size.")
 
     params = {}
@@ -133,5 +133,5 @@ def getStarInfo(filename: str, orientation: tuple) -> StarInfo:
     for lineString in lineStrings:
         lines.append(stringToLine(lineString, starParameters))
 
-    # Return a StarInfo containing both lists and a paramter object made out of the dictionary
+    # Return a StarInfo containing both lists and the paramter object
     return StarInfo(stars, lines, starParameters)

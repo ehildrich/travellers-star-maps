@@ -14,7 +14,7 @@ def drawEdgeRule(sp: StarParameters, font: ImageFont.FreeTypeFont, draw: ImageDr
     draw.line([(0, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], COLORS["gray"], 1)
     draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), 0), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["gray"], 1)
 
-    #Draw map edges
+    # Draw map edges
     draw.line([(0, sp.EDGE_SIZE), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
     draw.line([(sp.EDGE_SIZE, 0), (sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], sp.LINE_WIDTH)
     draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, 0), (sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], sp.LINE_WIDTH)
@@ -49,9 +49,9 @@ def drawEdgeRule(sp: StarParameters, font: ImageFont.FreeTypeFont, draw: ImageDr
 def getPos(sp: StarParameters, star: Star, type: str) -> float: 
     if (type.lower() == "x"):
         return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) + (star.x * sp.RESOLUTION)
-    if (type.lower() == "y"):
+    elif (type.lower() == "y"):
         return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) - (star.y * sp.RESOLUTION)
-    if (type.lower() == "z"):
+    elif (type.lower() == "z"):
         return (sp.IMAGE_SIZE/2 + sp.EDGE_SIZE) + (star.z * sp.RESOLUTION)
     else: 
         return -1
@@ -138,8 +138,8 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
 
 # Grabs a basic monospace font of the given size
 def getFont(size: int) -> ImageFont.FreeTypeFont:
-    sansSerif = font_manager.FontProperties(family = "monospace", style="normal")
-    filePath = font_manager.findfont(sansSerif)
+    monospace = font_manager.FontProperties(family = "monospace", style="normal")
+    filePath = font_manager.findfont(monospace)
 
     font = ImageFont.truetype(filePath, size)
     return font
