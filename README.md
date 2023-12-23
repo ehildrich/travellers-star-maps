@@ -1,5 +1,5 @@
 # Traveller's Star Maps	
-A simple Python application to generate visual starmaps for use in the TTRPG Traveller. It is currently in progress. 
+A simple Python application to generate visual starmaps for use in the TTRPG Traveller. 
 
 
 
@@ -9,6 +9,7 @@ This project utilizes the following Python libraries:
 * Pillow
 * math
 * mathplotlib
+* sys
 * os
 * datetime
 
@@ -51,3 +52,7 @@ All stars are placed on a square plane which runs from -100 to 100 on all axes. 
 - **Font Size**: Controls how large the text is. Relative to the 200x200 grid. 
 
 All parameters are given a minimum value if the provided value is too low. 
+
+
+# Usage
+Open the command line and run `starmap.py`. When starting the program, it will ask for a filename. Input the path to a text file formatted to the above specifications. The program will generate an image according to that text file and store it in an `output` folder located in the same place as the script. The text file name can also be included as a command line argument. 
