@@ -15,30 +15,30 @@ def drawEdgeRule(sp: StarParameters, draw: ImageDraw) -> None:
     draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), 0), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["gray"], 1)
 
     #Draw map edges
-    draw.line([(0, sp.EDGE_SIZE), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE)], COLORS["white"], 2)
-    draw.line([(sp.EDGE_SIZE, 0), (sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], 2)
-    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, 0), (sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], 2)
-    draw.line([(0, sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.IMAGE_SIZE + sp.EDGE_SIZE)], COLORS["white"], 2)
+    draw.line([(0, sp.EDGE_SIZE), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.EDGE_SIZE, 0), (sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, 0), (sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(0, sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.IMAGE_SIZE + sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
 
     # Draw 0 rules
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), 0), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.EDGE_SIZE)], COLORS["white"], 2)
-    draw.line([0, (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], COLORS["white"], 2)
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], 2)
-    draw.line([sp.IMAGE_SIZE + sp.EDGE_SIZE, (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], COLORS["white"], 2)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), 0), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([0, (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2), sp.IMAGE_SIZE + sp.EDGE_SIZE*2)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([sp.IMAGE_SIZE + sp.EDGE_SIZE, (sp.EDGE_SIZE + (sp.IMAGE_SIZE/2)), (sp.IMAGE_SIZE + sp.EDGE_SIZE*2, sp.EDGE_SIZE + (sp.IMAGE_SIZE/2))], COLORS["white"], sp.LINE_WIDTH)
 
     # Draw 50 rules
     # Top
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.EDGE_SIZE/2), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.EDGE_SIZE)], COLORS["white"], 2)
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.EDGE_SIZE/2), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.EDGE_SIZE)], COLORS["white"], 2)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.EDGE_SIZE/2), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.EDGE_SIZE/2), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.EDGE_SIZE)], COLORS["white"], sp.LINE_WIDTH)
     # Bottom
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2)], COLORS["white"], 2)
-    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2)], COLORS["white"], 2)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25), sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2)], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.IMAGE_SIZE + sp.EDGE_SIZE), (sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75), sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2)], COLORS["white"], sp.LINE_WIDTH)
     # Left
-    draw.line([(sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25)), (sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25))], COLORS["white"], 2)
-    draw.line([(sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75)), (sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75))], COLORS["white"], 2)
+    draw.line([(sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25)), (sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25))], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75)), (sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75))], COLORS["white"], sp.LINE_WIDTH)
      # Right
-    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25)), (sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25))], COLORS["white"], 2)
-    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75)), (sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75))], COLORS["white"], 2)
+    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25)), (sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.25))], COLORS["white"], sp.LINE_WIDTH)
+    draw.line([(sp.IMAGE_SIZE + sp.EDGE_SIZE, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75)), (sp.IMAGE_SIZE + sp.EDGE_SIZE + sp.EDGE_SIZE/2, sp.EDGE_SIZE + (sp.IMAGE_SIZE*0.75))], COLORS["white"], sp.LINE_WIDTH)
 
 # Returns either the x, y, or z position of a star on the board
 def getPos(sp: StarParameters, star: Star, type: str) -> float: 
@@ -53,12 +53,12 @@ def getPos(sp: StarParameters, star: Star, type: str) -> float:
 
 # Given a string of text, returns how many pixels wide that text is when drawn on the board
 def getTextWidth(font: ImageFont.FreeTypeFont, string: str) -> int:
-    testImage = Image.new("RGB", (75,75))
+    testImage = Image.new("RGB", ((len(string)*font.size)*2,100))
     testDraw = ImageDraw.Draw(testImage)
 
     testDraw.text((0,0), string, COLORS["white"], font)
     bound = testImage.getbbox()
-
+    
     return bound[2] - bound[0]
 
 # Draws a given star on the board according to the star's coordinates
@@ -73,17 +73,23 @@ def drawStar(sp: StarParameters, draw: ImageDraw, font: ImageFont.FreeTypeFont, 
     draw.ellipse([(xPos - starSize/2, yPos - starSize/2),(xPos + starSize/2, yPos + starSize/2)], fill=COLORS["white"])
 
     # Draw outside circle
-    draw.ellipse([(xPos - sp.CIRCLE_SIZE/2, yPos - sp.CIRCLE_SIZE/2),(xPos + sp.CIRCLE_SIZE/2, yPos + sp.CIRCLE_SIZE/2)], outline=COLORS[star.color], width=sp.LINE_WIDTH)
+    if (star.diameter*4 < sp.CIRCLE_SIZE): 
+        circleSize = sp.CIRCLE_SIZE
+        print("Warning: Diameter of star " + star.name + " was less than the specified Circle Size parameter.")
+    else:
+        circleSize = star.diameter*4
+    
+    draw.ellipse([(xPos - circleSize/2, yPos - circleSize/2),(xPos + circleSize/2, yPos + circleSize/2)], outline=COLORS[star.color], width=sp.LINE_WIDTH)
 
     # Add name and Z-axis below. Text is placed so that it appears just to the right of the star's circle. 
     # Check if any of the text will go past the rightmost edge rule. If so move it to the right of the star
-    if (xPos + sp.CIRCLE_SIZE + max(getTextWidth(font, star.name), getTextWidth(font, str(star.z))) > sp.IMAGE_SIZE + sp.EDGE_SIZE):
-        draw.text((xPos - sp.CIRCLE_SIZE - getTextWidth(font, star.name), yPos - sp.FONT_SIZE), star.name, COLORS["white"], font)
-        draw.text((xPos - sp.CIRCLE_SIZE - getTextWidth(font, str(star.z)), yPos), str(star.z), COLORS["white"], font)
+    if (xPos + circleSize + max(getTextWidth(font, star.name), getTextWidth(font, str(star.z))) > sp.IMAGE_SIZE + sp.EDGE_SIZE):
+        draw.text((xPos - circleSize/2 - getTextWidth(font, star.name) - sp.LINE_WIDTH - 4, yPos - sp.FONT_SIZE), star.name, COLORS["white"], font)
+        draw.text((xPos - circleSize/2 - getTextWidth(font, str(star.z)) - sp.LINE_WIDTH - 4, yPos), str(star.z), COLORS["white"], font)
     else:
         # Otherwise draw the text to the right of the star
-        draw.text((xPos + sp.CIRCLE_SIZE, yPos - sp.FONT_SIZE), str(star.name), COLORS["white"], font)
-        draw.text((xPos + sp.CIRCLE_SIZE, yPos), str(star.z), COLORS["white"], font)
+        draw.text((xPos + circleSize/2 + sp.LINE_WIDTH + 4, yPos - sp.FONT_SIZE), str(star.name), COLORS["white"], font)
+        draw.text((xPos + circleSize/2 + sp.LINE_WIDTH + 4, yPos), str(star.z), COLORS["white"], font)
 
 # Draws a line between two stars on the board
 def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo) -> None: 
@@ -106,8 +112,14 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
         # Get the distance between the two stars
         distance = math.sqrt((secondStarX - firstStarX)**2 + (secondStarY - firstStarY)**2)
 
+        # If the line offset is less than the star's circle size, make it larger to compensate
+        if (star.diameter*4 > sp.CIRCLE_SIZE): 
+            offset = (star.diameter*4)/2
+        else:
+            offset = sp.LINE_OFFSET
+        
         # Get the ratio between the distance and the offset
-        distanceRatio = sp.LINE_OFFSET / distance
+        distanceRatio = offset / distance
         # Use the ratio to calculate the points on the line that are a offset's length away from the stars
         firstOffset = ((1 - distanceRatio) * firstStarX + distanceRatio * secondStarX, (1 - distanceRatio) * firstStarY + distanceRatio * secondStarY) 
         secondOffset = ((1 - distanceRatio) * secondStarX + distanceRatio * firstStarX, (1 - distanceRatio) * secondStarY + distanceRatio * firstStarY) 

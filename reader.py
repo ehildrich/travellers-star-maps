@@ -11,16 +11,24 @@ def stringToStar(string: str) -> Star:
         raise ValueError("One of the stars does not have the correct number of values, 6.")
 
     starName = values[0]
-    starX = float(values[1])
-    starY = float(values[2])
-    starZ = float(values[3])
-    starColor = values[4]
 
+    try: 
+        starX = float(values[1])
+        starY = float(values[2])
+        starZ = float(values[3])
+    except: 
+        raise ValueError("One of the x, y, and z values of star " + starName + " is not a valid number.")
+
+    starColor = values[4]
     # if the color isn't valid, default to white
     if (starColor not in COLORS): 
         starColor = "white"
 
-    starDiameter = float(values[5])
+    try: 
+        starDiameter = float(values[5])
+    except: 
+        raise ValueError("The circle diameter of star " + starName + " is not a valid number.")
+    
     return Star(starX, starY, starZ, starName, starColor, starDiameter)
 
 # Converts a string into a star line object
@@ -33,8 +41,17 @@ def stringToLine(string: str) -> StarLine:
     
     firstStar = values[0]
     secondStar = values[1]
+
     lineColor = values[2]
-    lineDiameter = float(values[3])
+    # if the color isn't valid, default to white
+    if (lineColor not in COLORS): 
+        lineColor = "white"
+
+    try:
+        lineDiameter = float(values[3])
+    except: 
+        raise ValueError("The width of the line between " + firstStar + " and " + secondStar + " is not a valid number.")
+
     return StarLine(firstStar, secondStar, lineColor, lineDiameter)
 
 # Opens a text file and returns a list of the file's text lines, stripped of whitespace
@@ -81,9 +98,13 @@ def getStarInfo(filename: str) -> StarInfo:
         raise ValueError("The number of parameters given is incorrect. There must be 7 parameters: Image Size, Edge Size, Line Width, Line Offset, Star Size, Circle Size, and Font Size.")
 
     params = {}
-    for paramString in paramStrings:
-        param = paramString.split(": ")
-        params[param[0]] = int(param[1])
+    try: 
+        for paramString in paramStrings:
+            param = paramString.split(": ")
+            params[param[0]] = float(param[1])
+    except:
+        raise ValueError("There was an error with the format of one of the parameters. All of the values must be numbers.")
+
 
     # Take only the star items and convert into a list of star objects
     starStrings = items[(starIndex + 1):connectIndex]
