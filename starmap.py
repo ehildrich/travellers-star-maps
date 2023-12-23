@@ -15,7 +15,7 @@ try:
     map = createBoard(starmapInfo)
 except Exception as e:
     # Show any errors
-    print(e)
+    print("Fatal Error: " + str(e))
 else: 
     # Show the map
     map.show()

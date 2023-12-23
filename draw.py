@@ -77,12 +77,7 @@ def drawStar(sp: StarParameters, draw: ImageDraw, font: ImageFont.FreeTypeFont, 
     draw.ellipse([(xPos - starSize/2, yPos - starSize/2),(xPos + starSize/2, yPos + starSize/2)], fill=COLORS["white"])
 
     # Draw outside circle
-    if (star.diameter*sp.RESOLUTION < sp.CIRCLE_SIZE): 
-        circleSize = sp.CIRCLE_SIZE
-        print("Warning: Diameter of star " + star.name + " was less than the specified Circle Size parameter.")
-    else:
-        circleSize = star.diameter*sp.RESOLUTION
-    
+    circleSize = star.diameter*sp.RESOLUTION
     draw.ellipse([(xPos - circleSize/2, yPos - circleSize/2),(xPos + circleSize/2, yPos + circleSize/2)], outline=COLORS[star.color], width=sp.LINE_WIDTH)
 
     # Add name and Z-axis below. Text is placed so that it appears just to the right of the star's circle. 
@@ -124,7 +119,7 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
         secondOffset = ((1 - secondDistanceRatio) * secondStarX + secondDistanceRatio * firstStarX, (1 - secondDistanceRatio) * secondStarY + secondDistanceRatio * firstStarY) 
 
         # Draw the line with the offset coordinates
-        draw.line([firstOffset, secondOffset], COLORS[line.color], sp.LINE_WIDTH)
+        draw.line([firstOffset, secondOffset], COLORS[line.color], int(line.diameter*4))
     else: 
         raise AttributeError("One or more stars " + line.firstStar + " and " + line.secondStar + " specified in a line was not found.")
 

@@ -29,13 +29,14 @@ def stringToStar(string: str, sp: StarParameters) -> Star:
         # If the star's diameter is less than the given circle size, normalize it to the minimum circle size.
         if (starDiameter*sp.RESOLUTION < sp.CIRCLE_SIZE):
             starDiameter = sp.CIRCLE_SIZE/sp.RESOLUTION
+            print("Warning: Diameter of star " + starName + " was less than the specified Circle Size parameter.")
     except: 
         raise ValueError("The circle diameter of star " + starName + " is not a valid number.")
     
     return Star(starX, starY, starZ, starName, starColor, starDiameter)
 
 # Converts a string into a star line object
-def stringToLine(string: str) -> StarLine: 
+def stringToLine(string: str, sp: StarParameters) -> StarLine: 
     values = string.split(", ")
 
     # Each line needs to have 4 values
@@ -52,6 +53,10 @@ def stringToLine(string: str) -> StarLine:
 
     try:
         lineDiameter = float(values[3])
+        # If the line's diameter is less than the given line width, normalize it to the minimum line width.
+        if (lineDiameter*sp.RESOLUTION < sp.LINE_WIDTH):
+            lineDiameter = sp.LINE_WIDTH/sp.RESOLUTION
+            print("Warning: Line width of the line between " + firstStar + " and " + secondStar + " was less than the specified Line Width parameter.")
     except: 
         raise ValueError("The width of the line between " + firstStar + " and " + secondStar + " is not a valid number.")
 
@@ -124,7 +129,7 @@ def getStarInfo(filename: str) -> StarInfo:
     lineStrings = items[(connectIndex + 1):]
     lines = []
     for lineString in lineStrings:
-        lines.append(stringToLine(lineString))
+        lines.append(stringToLine(lineString, starParameters))
 
     # Return a StarInfo containing both lists and a paramter object made out of the dictionary
     return StarInfo(stars, lines, starParameters)
