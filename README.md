@@ -38,6 +38,8 @@ In order for the stars and lines to be read in properly from the text file, the 
 
 Within each section, the items can be in any order. 
 
+Valid color options are blue, brown, green, orange, purple, red, white, and yellow. Any invalid color will be set to white instead. 
+
 
 
 # Values
@@ -55,4 +57,27 @@ All parameters are given a minimum value if the provided value is too low.
 
 
 # Usage
-Open the command line and run `starmap.py`. When starting the program, it will ask for a filename. Input the path to a text file formatted to the above specifications. The program will generate an image according to that text file and store it in an `output` folder located in the same place as the script. The text file name can also be included as a command line argument. 
+Open the command line and run `starmap.py`. When starting the program, it will ask for a filename. Input the path to a text file that has been formatted to the above specifications. The program will generate an image according to that text file and store it in an `output` folder located in the same directory as the script. The text file name can also be included as a command line argument. 
+
+### Orientation
+When using the command line, the user may specify the orientation of the map. All stars have an x, y, and z value which are the second, third, and fourth values specified on each line of the text file respectively. When working on the command line, after the filename, the user may enter these axes to determine how the map is rendered. The first axis is the horizontal axis, the second is the vertical, and the third is the depth axis. 
+
+When a single axis is entered, it will be the horizontal axis, with the other two automatically assinged in alphabetical order after it. Entering
+```
+python starmap.y test.txt y
+```
+will result in an orientation of (y, z, x). 
+
+When two axes are entered, the third is automatically assigned as the depth axis. Entering
+```
+python starmap.py test.txt z x
+```
+will result in an orientation of (z, x, y). 
+
+Entering all three will use that orientation. Entering 
+```
+python starmap.py test.txt z y x
+```
+will result in an orientation of (z, y, x). 
+
+If there is an error with this, such as entering the same axis twice or entering a value which is not x, y, or z, the program will simply default to using (x, y, z). 

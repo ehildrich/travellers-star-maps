@@ -86,7 +86,7 @@ def getFileStrings(filename: str) -> list:
 
 # Given a list of strings from a properly formatted starmap text file, returns
 # a StarInfo object containing a list of stars and a list of lines
-def getStarInfo(filename: str) -> StarInfo:
+def getStarInfo(filename: str, orientation: tuple) -> StarInfo:
     items = getFileStrings(filename)
     
     # Get the separator between the stars and lines in the text lines
@@ -118,7 +118,8 @@ def getStarInfo(filename: str) -> StarInfo:
                                     params['Line Width'], 
                                     params['Star Size'], 
                                     params['Circle Size'], 
-                                    params['Font Size'])
+                                    params['Font Size'], 
+                                    orientation)
 
     # Take only the star items and convert into a list of star objects
     starStrings = items[(starIndex + 1):connectIndex]

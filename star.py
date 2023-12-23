@@ -5,6 +5,7 @@ COLORS = {
             "blue" : (51, 148, 255), 
             "brown" : (123, 68, 0), 
             "gray" : (50, 50, 50), 
+            "grey" : (50, 50, 50), 
             "green" : (25, 224, 25), 
             "orange" : (255, 121, 0), 
             "purple" : (106, 1, 250), 
@@ -18,7 +19,7 @@ COLORS = {
 
 # Defines the parameters of the board
 class StarParameters:
-    def __init__(self, imgSize, edgeSize, lineWidth, starSize, circleSize, fontSize): 
+    def __init__(self, imgSize, edgeSize, lineWidth, starSize, circleSize, fontSize, orientation: tuple): 
         self.IMAGE_SIZE = int(imgSize) if int(imgSize) > 1 else 200
         self.RESOLUTION = self.IMAGE_SIZE/200
         self.EDGE_SIZE = int(edgeSize) if int(edgeSize) > 1 else 2
@@ -26,6 +27,7 @@ class StarParameters:
         self.MAX_STAR_SIZE = int(starSize*4) if int(starSize*4) >= 1 else 4
         self.CIRCLE_SIZE = int(circleSize*4) if int(circleSize*4) >= 1 else 4
         self.FONT_SIZE = int(fontSize*4) if int(fontSize*4) >= 1 else 4
+        self.orientation = orientation
 
         # If the max star size is greater than the circle size, increase 
         # the circle size to be slightly larger than the max circle size
