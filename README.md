@@ -40,7 +40,7 @@ Within each section, the items can be in any order.
 
 
 # Values
-All stars are placed on a square plane which runs from -100 to 100 on both axes. Each star's x, y, and z value must be within this range. The diameter of stars, the slot diameter of lines, the Line Width, Line Offset, Star Size, Circle Size, and Font Size values are all relative to this 200x200 plane. The only exceptions are the Image Size and Edge Size, which are in pixels. 
+All stars are placed on a square plane which runs from -100 to 100 on all axes. Each star's x, y, and z value must be within this range. The diameter of stars, the width of individual lines, and the parameters Line Width, Star Size, Circle Size, and Font Size are all relative to this 200x200 plane. The only exceptions are the Image Size and Edge Size, which are in pixels. 
 
 ### Parameters
 - **Image Size**: Controls the width and height of the main board in pixels. 

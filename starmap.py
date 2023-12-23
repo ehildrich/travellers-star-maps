@@ -4,8 +4,7 @@ from draw import createBoard, saveImage
 
 
 # Get user input of what text file to read
-#mapFile = input("Enter the name of the text file to read: ")
-mapFile = "map.txt"
+mapFile = input("Enter the name of the text file to read: ")
 
 try: 
     # Get starmap information
@@ -17,9 +16,5 @@ except Exception as e:
     # Show any errors
     print("Fatal Error: " + str(e))
 else: 
-    # Show the map
-    map.show()
-
     # Save the map
     saveImage(map)
-    print("Image saved.")

@@ -71,7 +71,8 @@ def drawStar(sp: StarParameters, draw: ImageDraw, font: ImageFont.FreeTypeFont, 
     xPos = getPos(sp, star, "x")
     yPos = getPos(sp, star, "y")
 
-    starSize = ((star.z + 100) / 200) * sp.MAX_STAR_SIZE
+    # Calculate star size. It must be at least 1
+    starSize = (((star.z + 100) / 200) * sp.MAX_STAR_SIZE) if (((star.z + 100) / 200) * sp.MAX_STAR_SIZE) > 0 else 1
 
     # Draw circle on board 
     draw.ellipse([(xPos - starSize/2, yPos - starSize/2),(xPos + starSize/2, yPos + starSize/2)], fill=COLORS["white"])
@@ -114,7 +115,7 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
         firstDistanceRatio = getDistanceRatio(firstStar, sp, distance)
         secondDistanceRatio = getDistanceRatio(secondStar, sp, distance)
         
-        # Use the ratio to calculate the points on the line that are an offset's length away from the stars
+        # Use the ratio to calculate the points on the line that are an offset's length away from the stars on each end
         firstOffset = ((1 - firstDistanceRatio) * firstStarX + firstDistanceRatio * secondStarX, (1 - firstDistanceRatio) * firstStarY + firstDistanceRatio * secondStarY) 
         secondOffset = ((1 - secondDistanceRatio) * secondStarX + secondDistanceRatio * firstStarX, (1 - secondDistanceRatio) * secondStarY + secondDistanceRatio * firstStarY) 
 
@@ -123,7 +124,7 @@ def drawLine(sp: StarParameters, draw: ImageDraw, line: StarLine, info: StarInfo
     else: 
         raise AttributeError("One or more stars " + line.firstStar + " and " + line.secondStar + " specified in a line was not found.")
 
-# Grabs a basic sans-serif font of the given size
+# Grabs a basic monospace font of the given size
 def getFont(size: int) -> ImageFont.FreeTypeFont:
     sansSerif = font_manager.FontProperties(family = "monospace", style="normal")
     filePath = font_manager.findfont(sansSerif)
@@ -136,9 +137,10 @@ def drawBoard(draw: ImageDraw, starmapInfo: StarInfo) -> None:
     # First draw map edges
     drawEdgeRule(starmapInfo.params, draw)
 
+    # Grab the font to use on the stars
     typeFont = getFont(starmapInfo.params.FONT_SIZE)
 
-    # Draw lines before stars so the stars appear on top
+    # Draw lines before stars so the stars and circles appear on top
     for line in starmapInfo.lines: 
         drawLine(starmapInfo.params, draw, line, starmapInfo)
 
@@ -167,4 +169,14 @@ def saveImage(image: Image) -> None:
     dateString = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
 
     # Save the image in the output directory
-    image.save(OUTPUT + dateString + ".png")
+    fileName = OUTPUT + dateString + ".png"
+    image.save(fileName)
+    print("Image saved.")
+
+    # Finish off by opening the completed image for the user to see
+    try: 
+        finishedImage = Image.open(fileName)
+    except: 
+        raise FileNotFoundError("There was a problem opening the generated image.")
+    else:
+        finishedImage.show()

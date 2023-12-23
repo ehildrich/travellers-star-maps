@@ -112,6 +112,7 @@ def getStarInfo(filename: str) -> StarInfo:
             params[param[0]] = float(param[1])
     except:
         raise ValueError("There was an error with the format of one of the parameters. All of the values must be numbers.")
+    # Create the StarParameters object to use with the rest of the items
     starParameters =StarParameters(params['Image Size'], 
                                     params['Edge Size'], 
                                     params['Line Width'], 
